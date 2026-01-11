@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AssessmentResult, DonorType } from '../types';
 import { DONOR_TYPES_INFO } from '../constants';
 
@@ -11,9 +11,15 @@ interface ResultsProps {
 const Results: React.FC<ResultsProps> = ({ result, onSave }) => {
   const [formData, setFormData] = useState({ name: '', email: '', status: 'current' });
   const [isSubmitted, setIsSubmitted] = useState(!!result.userData);
+  const [showReveal, setShowReveal] = useState(false);
   
   const typeInfo = DONOR_TYPES_INFO[result.donorType];
   const sortedScores = Object.entries(result.scores).sort((a, b) => b[1] - a[1]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowReveal(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,173 +28,185 @@ const Results: React.FC<ResultsProps> = ({ result, onSave }) => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-      <div className="grid lg:grid-cols-3 gap-10">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-10">
-          <div className="bg-white p-10 lg:p-14 rounded-[3rem] shadow-2xl border border-slate-100 relative overflow-hidden ring-1 ring-slate-100/50">
-            <div className={`absolute top-0 left-0 w-full h-3 ${typeInfo.color}`}></div>
+    <div className={`max-w-7xl mx-auto px-4 py-16 transition-all duration-1000 ${showReveal ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+      <div className="text-center mb-16">
+        <span className="inline-block px-4 py-1 rounded-full bg-unicef-cyan/10 text-unicef-cyan text-[10px] font-black uppercase tracking-[0.3em] mb-4">Discovery Complete</span>
+        <h2 className="text-5xl lg:text-7xl font-black text-unicef-dark uppercase tracking-tighter mb-4 leading-none">Your Archetype is <span className="text-unicef-cyan">Revealed</span></h2>
+        <p className="text-slate-400 font-bold max-w-xl mx-auto">Based on your responses, we've mapped your unique donor psychology and impact roadmap.</p>
+      </div>
+
+      <div className="grid lg:grid-cols-12 gap-10 items-start">
+        {/* Main Personality Card */}
+        <div className="lg:col-span-8 space-y-10">
+          <div className="bg-white rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100 relative group">
+            <div className={`h-4 ${typeInfo.color} group-hover:h-6 transition-all duration-500`}></div>
             
-            <div className="mb-12">
-              <span className="text-[10px] font-black text-unicef-cyan uppercase tracking-[0.4em] mb-3 block">For every child, the right insights</span>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-6">
-                <span className="text-7xl drop-shadow-sm">{typeInfo.icon}</span>
-                <h1 className="text-5xl lg:text-6xl font-black text-unicef-dark leading-tight uppercase tracking-tighter">{result.donorType}</h1>
-              </div>
-              <p className="text-2xl text-slate-600 leading-relaxed font-bold border-l-8 border-unicef-slate pl-8 my-10 italic">
-                "{typeInfo.description}"
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-10 mb-12">
-              <div className="space-y-6">
-                <h3 className="text-sm font-black text-unicef-dark flex items-center gap-3 uppercase tracking-widest">
-                  <div className="w-8 h-8 bg-unicef-cyan text-white rounded-lg flex items-center justify-center text-xs">V</div>
-                  Values & Alignment
-                </h3>
-                <ul className="space-y-4">
-                  {typeInfo.characteristics.map((c, i) => (
-                    <li key={i} className="flex items-center gap-4 text-slate-600 font-bold">
-                      <div className={`w-3 h-3 rounded-full ${typeInfo.color} ring-4 ring-slate-50`}></div>
-                      {c}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="space-y-6">
-                <h3 className="text-sm font-black text-unicef-dark flex items-center gap-3 uppercase tracking-widest">
-                  <div className="w-8 h-8 bg-unicef-yellow text-white rounded-lg flex items-center justify-center text-xs">P</div>
-                  Priority Causes
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {typeInfo.priorityIssues.map((issue, i) => (
-                    <span key={i} className="px-4 py-2 bg-unicef-slate border border-slate-200 rounded-xl text-[10px] font-black text-unicef-dark uppercase tracking-widest">
-                      {issue}
-                    </span>
-                  ))}
-                </div>
-                <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest bg-slate-50 p-4 rounded-xl border border-dashed border-slate-200">
-                  {typeInfo.engagement}
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-slate-100 pt-10 mt-14">
-              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8">Persona Strength Matrix</h3>
-              <div className="space-y-6">
-                {sortedScores.map(([type, score]) => (
-                  <div key={type} className="group">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className={`text-xs font-black uppercase tracking-wider transition-colors ${type === result.donorType ? 'text-unicef-cyan' : 'text-slate-400 group-hover:text-slate-600'}`}>
-                        {type}
-                      </span>
-                      <span className="font-black text-[10px] text-slate-300 tracking-tighter">{Math.round((score / 40) * 100)}%</span>
-                    </div>
-                    <div className="h-3 bg-unicef-slate rounded-full overflow-hidden p-0.5">
-                      <div 
-                        className={`h-full rounded-full transition-all duration-1000 ease-out shadow-sm ${type === result.donorType ? DONOR_TYPES_INFO[type as DonorType].color : 'bg-slate-300 opacity-30'}`}
-                        style={{ width: `${Math.max(5, (score / 40) * 100)}%` }}
-                      >
-                         <div className="w-full h-full bg-white/20 animate-pulse"></div>
-                      </div>
-                    </div>
+            <div className="p-10 lg:p-16">
+              <div className="flex flex-col lg:flex-row gap-10 items-start">
+                <div className="relative flex-shrink-0 mx-auto lg:mx-0">
+                  <div className={`w-32 h-32 lg:w-48 lg:h-48 rounded-[2.5rem] ${typeInfo.color} flex items-center justify-center text-6xl lg:text-8xl shadow-2xl transition-transform hover:scale-105 duration-500`}>
+                    {typeInfo.icon}
                   </div>
-                ))}
+                  <div className="absolute -bottom-4 -right-4 bg-unicef-yellow text-unicef-dark px-4 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl rotate-12">
+                    Superpower
+                  </div>
+                </div>
+
+                <div className="flex-grow text-center lg:text-left">
+                  <span className="text-[10px] font-black text-unicef-cyan uppercase tracking-[0.4em] mb-2 block">The Foundational Identity</span>
+                  <h1 className="text-5xl lg:text-7xl font-black text-unicef-dark uppercase tracking-tighter mb-6 leading-tight">
+                    {result.donorType}
+                  </h1>
+                  <p className="text-2xl text-slate-500 font-bold leading-relaxed mb-8 italic border-l-8 border-unicef-slate pl-8 py-2">
+                    "{typeInfo.description}"
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                    {typeInfo.characteristics.map((c, i) => (
+                      <span key={i} className="px-5 py-2 bg-slate-50 border border-slate-100 rounded-full text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${typeInfo.color}`}></div>
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-12 mt-20 border-t border-slate-50 pt-16">
+                <div>
+                  <h3 className="text-sm font-black text-unicef-dark uppercase tracking-widest mb-8 flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-unicef-cyan text-white flex items-center justify-center text-xs">01</span>
+                    Persona Strength Matrix
+                  </h3>
+                  <div className="space-y-6">
+                    {sortedScores.slice(0, 5).map(([type, score]) => (
+                      <div key={type} className="group">
+                        <div className="flex justify-between items-center mb-1.5">
+                          <span className={`text-[10px] font-black uppercase tracking-wider ${type === result.donorType ? 'text-unicef-cyan' : 'text-slate-400'}`}>
+                            {type}
+                          </span>
+                          <span className="text-[10px] font-black text-slate-300">{Math.round((score / 40) * 100)}%</span>
+                        </div>
+                        <div className="h-2 bg-slate-50 rounded-full overflow-hidden p-0.5">
+                          <div 
+                            className={`h-full rounded-full transition-all duration-1000 ease-out ${type === result.donorType ? DONOR_TYPES_INFO[type as DonorType].color : 'bg-slate-200'}`}
+                            style={{ width: `${Math.max(5, (score / 40) * 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                   <h3 className="text-sm font-black text-unicef-dark uppercase tracking-widest mb-8 flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-unicef-green text-white flex items-center justify-center text-xs">02</span>
+                    Action Roadmap
+                  </h3>
+                  <div className="space-y-4">
+                    {typeInfo.priorityIssues.map((issue, i) => (
+                      <div key={i} className="p-4 bg-unicef-slate rounded-2xl flex items-center gap-4 group hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-default">
+                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-lg shadow-sm group-hover:bg-unicef-cyan group-hover:text-white transition-colors">🎯</div>
+                        <span className="text-xs font-black text-unicef-dark uppercase tracking-widest">{issue}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-unicef-dark rounded-[2.5rem] p-10 text-white shadow-2xl">
-              <h3 className="text-xl font-black mb-6 uppercase tracking-tight">Your 2026 Roadmap</h3>
-              <ul className="space-y-6">
-                <li className="flex items-start gap-4">
-                  <div className="mt-1 w-8 h-8 bg-unicef-cyan text-white rounded-xl flex items-center justify-center text-xs font-black italic flex-shrink-0 shadow-lg shadow-unicef-cyan/20">01</div>
-                  <p className="text-sm text-slate-300 font-medium leading-relaxed">Focus on child protection programs where your values map most directly to the 54% recruit success rate.</p>
-                </li>
-                <li className="flex items-start gap-4">
-                  <div className="mt-1 w-8 h-8 bg-unicef-cyan text-white rounded-xl flex items-center justify-center text-xs font-black italic flex-shrink-0 shadow-lg shadow-unicef-cyan/20">02</div>
-                  <p className="text-sm text-slate-300 font-medium leading-relaxed">Engage with social media campaigns designed for the {result.donorType} persona (61% preferred channel).</p>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-unicef-cyan/5 rounded-[2.5rem] p-10 border-2 border-unicef-cyan/10 shadow-lg">
-              <h3 className="text-xl font-black text-unicef-dark mb-6 uppercase tracking-tight">Impact Areas</h3>
-              <div className="space-y-4">
-                {typeInfo.opportunities.map((opp, i) => (
-                  <div key={i} className="bg-white p-4 rounded-2xl shadow-sm border border-unicef-cyan/20 flex items-center justify-between group hover:border-unicef-cyan transition-colors">
-                    <span className="text-xs font-black text-unicef-dark uppercase tracking-wider">{opp}</span>
-                    <button className="w-8 h-8 bg-unicef-cyan/10 text-unicef-cyan rounded-full flex items-center justify-center font-black group-hover:bg-unicef-cyan group-hover:text-white transition-all">→</button>
-                  </div>
-                ))}
+          {/* Engagement Strip */}
+          <div className="bg-unicef-dark rounded-[3rem] p-10 lg:p-16 text-white shadow-3xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-unicef-cyan/10 rounded-full -mr-48 -mt-48 blur-3xl animate-pulse"></div>
+            <div className="relative z-10 flex flex-col md:flex-row gap-10 items-center">
+              <div className="text-center md:text-left flex-grow">
+                <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">Join the {result.donorType} Collective</h3>
+                <p className="text-slate-400 font-bold mb-8 max-w-lg">We’ve prepared a specific stewardship journey for you. It includes impact reporting, exclusive briefings, and a direct line to our field experts.</p>
+                <div className="flex flex-wrap gap-4">
+                  {typeInfo.opportunities.slice(0, 2).map((opp, i) => (
+                    <div key={i} className="px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-unicef-cyan transition-colors cursor-pointer">
+                      {opp}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex-shrink-0 w-32 h-32 bg-white rounded-[2.5rem] p-4 rotate-6 group-hover:rotate-0 transition-transform duration-700">
+                <img src="https://unicef.org/sites/default/files/styles/hero_mobile/public/UN0336215.jpg?itok=zE1x_k6h" className="w-full h-full object-cover rounded-2xl" alt="Impact" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sidebar / Form */}
-        <div className="space-y-10">
+        {/* Sidebar Conversion */}
+        <div className="lg:col-span-4 space-y-10">
           {!isSubmitted ? (
-            <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-100 sticky top-24 ring-4 ring-unicef-slate">
-              <h3 className="text-2xl font-black text-unicef-dark mb-4 uppercase tracking-tighter">Impact Report</h3>
-              <p className="text-slate-500 text-sm mb-8 leading-relaxed font-medium">
-                Link your <span className="text-unicef-cyan font-black">{result.donorType}</span> profile to a full UNICEF stewardship package for 2026.
-              </p>
+            <div className="bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100 sticky top-24 ring-4 ring-unicef-slate transition-all hover:ring-unicef-cyan/20">
+              <div className="w-16 h-16 bg-unicef-magenta text-white rounded-[1.2rem] flex items-center justify-center text-2xl shadow-xl shadow-unicef-magenta/30 mb-8 mx-auto -mt-16 animate-bounce-slow">
+                💌
+              </div>
+              <h3 className="text-3xl font-black text-unicef-dark text-center mb-4 uppercase tracking-tighter">Get Your Pack</h3>
+              <p className="text-slate-400 text-sm text-center mb-8 font-medium">Connect your <span className="text-unicef-cyan font-black">{result.donorType}</span> archetype to our global mission.</p>
+              
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Full Name</label>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">My Full Name</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:ring-8 focus:ring-unicef-cyan/5 focus:border-unicef-cyan outline-none transition-all font-bold placeholder:text-slate-200"
-                    placeholder="Jane Doe"
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-slate-50 focus:border-unicef-cyan focus:bg-white outline-none transition-all font-bold placeholder:text-slate-300"
+                    placeholder="E.g. David Beckham"
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Address</label>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Impact Email</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:ring-8 focus:ring-unicef-cyan/5 focus:border-unicef-cyan outline-none transition-all font-bold placeholder:text-slate-200"
-                    placeholder="jane@unicef.org"
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-slate-50 focus:border-unicef-cyan focus:bg-white outline-none transition-all font-bold placeholder:text-slate-300"
+                    placeholder="hello@world.com"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-5 bg-unicef-cyan text-white rounded-full font-black shadow-xl shadow-unicef-cyan/30 hover:bg-unicef-blue hover:-translate-y-1 transition-all mt-4 text-sm uppercase tracking-widest"
+                  className="w-full py-5 bg-unicef-cyan text-white rounded-full font-black shadow-xl shadow-unicef-cyan/30 hover:bg-unicef-blue hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase tracking-widest mt-4"
                 >
-                  Download Report
+                  Claim My Roadmap
                 </button>
-                <p className="text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest px-4 pt-4 leading-relaxed">
-                  Trusted by <span className="text-unicef-cyan font-black">4,400+</span> global donors.
-                </p>
               </form>
             </div>
           ) : (
-            <div className="bg-unicef-green p-12 rounded-[2.5rem] text-center shadow-2xl shadow-unicef-green/20 sticky top-24">
-              <div className="w-24 h-24 bg-white text-unicef-green rounded-full flex items-center justify-center text-4xl mx-auto mb-8 shadow-xl">✓</div>
-              <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tighter">Confirmed!</h3>
-              <p className="text-white font-bold leading-relaxed mb-10 opacity-90">
-                The {result.donorType} stewardship pack is on its way to your inbox.
-              </p>
+            <div className="bg-unicef-green rounded-[3rem] p-12 text-center text-white shadow-2xl shadow-unicef-green/30 sticky top-24 animate-in zoom-in duration-500">
+              <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 shadow-inner ring-4 ring-white/30">
+                ⭐
+              </div>
+              <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Pack Sent!</h3>
+              <p className="font-bold mb-10 opacity-90">Check your inbox, {formData.name.split(' ')[0]}. Your stewardship journey begins now.</p>
               <button 
                 onClick={() => setIsSubmitted(false)}
-                className="w-full py-4 bg-unicef-dark text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-black transition-colors"
+                className="w-full py-4 bg-white text-unicef-green rounded-full font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all"
               >
-                Change Details
+                Change Email
               </button>
             </div>
           )}
           
-          <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm text-center">
-            <h4 className="font-black text-unicef-dark text-[10px] uppercase tracking-[0.3em] mb-6">Promote Visibility</h4>
-            <div className="flex flex-col gap-3">
-              <button className="w-full py-3 bg-unicef-cyan/10 text-unicef-cyan rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-unicef-cyan hover:text-white transition-all">Share Result</button>
-              <button className="w-full py-3 bg-slate-50 text-slate-400 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-100 transition-all">Copy Link</button>
+          <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl text-center flex flex-col items-center">
+             <div className="flex -space-x-3 mb-6">
+              {[1, 2, 3, 4].map(i => (
+                <img key={i} src={`https://i.pravatar.cc/100?u=u${i}`} className="w-10 h-10 rounded-full border-4 border-white shadow-sm" alt="User" />
+              ))}
+              <div className="w-10 h-10 rounded-full border-4 border-white shadow-sm bg-unicef-yellow text-unicef-dark flex items-center justify-center text-[10px] font-black">+8k</div>
+            </div>
+            <h4 className="font-black text-unicef-dark text-[10px] uppercase tracking-[0.3em] mb-2">Join the Movement</h4>
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-8">Share your Archetype online</p>
+            <div className="flex gap-4 w-full">
+              <button className="flex-1 py-4 bg-unicef-cyan/10 text-unicef-cyan rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-unicef-cyan hover:text-white transition-all">Instagram</button>
+              <button className="flex-1 py-4 bg-unicef-cyan/10 text-unicef-cyan rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-unicef-cyan hover:text-white transition-all">LinkedIn</button>
             </div>
           </div>
         </div>

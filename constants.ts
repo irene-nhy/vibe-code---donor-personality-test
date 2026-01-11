@@ -106,12 +106,12 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: 2,
-    text: "How do you view your relationship with UNICEF?",
+    text: "How would you describe your ideal connection to a cause?",
     options: [
-      { id: '2a', text: "I want to fulfill my duty in this world.", weights: { [DonorType.DEVOUT]: 5 } },
-      { id: '2b', text: "I value the respect from my family or friends for giving.", weights: { [DonorType.RECOGNITION_SEEKER]: 5 } },
-      { id: '2c', text: "I want to be actively engaged with the cause.", weights: { [DonorType.ACTIVIST]: 5 } },
-      { id: '2d', text: "I want to feel connected with other givers.", weights: { [DonorType.NETWORKER]: 5 } }
+      { id: '2a', text: "Fulfilling a deep sense of responsibility to the world.", weights: { [DonorType.DEVOUT]: 5 } },
+      { id: '2b', text: "Sharing my commitment with my community and family.", weights: { [DonorType.RECOGNITION_SEEKER]: 5 } },
+      { id: '2c', text: "Being part of a hands-on, active movement for change.", weights: { [DonorType.ACTIVIST]: 5 } },
+      { id: '2d', text: "Building meaningful connections with fellow supporters.", weights: { [DonorType.NETWORKER]: 5 } }
     ]
   },
   {
@@ -128,7 +128,7 @@ export const QUESTIONS: Question[] = [
     id: 4,
     text: "What values do you look for in an organization?",
     options: [
-      { id: '4a', text: "Tradition and family safety are very important.", weights: { [DonorType.DEVOUT]: 5 } },
+      { id: '4a', text: "A steadfast commitment to moral duty and protecting the innocent.", weights: { [DonorType.DEVOUT]: 5 } },
       { id: '4b', text: "Creativity and new ways of thinking.", weights: { [DonorType.ACTIVIST]: 5, [DonorType.ADVOCATE]: 3 } },
       { id: '4c', text: "Risk-taking to solve major social problems.", weights: { [DonorType.ADVOCATE]: 5 } },
       { id: '4d', text: "Efficiency and wise spending of funds.", weights: { [DonorType.REALIST]: 5 } }

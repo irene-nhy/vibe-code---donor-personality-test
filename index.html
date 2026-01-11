@@ -4,9 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Donor Personality Assessment</title>
+    <title>UNICEF | Donor Discovery</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -22,9 +23,12 @@
                 slate: '#f3f3f3'
               }
             },
+            animation: {
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'bounce-slow': 'bounce 3s infinite',
+            },
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
             }
           }
         }
@@ -33,10 +37,19 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
       }
-      h1, h2, h3 {
-        font-family: 'Inter', sans-serif; /* UNICEF branding usually uses clean sans-serif */
-        font-weight: 800;
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .card-float {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .card-float:hover {
+        transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+      }
+      .unicef-gradient {
+        background: linear-gradient(135deg, #00adef 0%, #1cabe2 100%);
       }
     </style>
   <script type="importmap">
@@ -50,7 +63,7 @@
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-900">
+  <body class="bg-[#fafbfc] text-slate-900">
     <div id="root"></div>
   </body>
 </html>
