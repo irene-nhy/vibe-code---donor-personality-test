@@ -96,75 +96,62 @@ export const DONOR_TYPES_INFO: Record<DonorType, {
 export const QUESTIONS: Question[] = [
   {
     id: 1,
-    text: "What is your primary reason for supporting a charitable cause?",
+    text: "What is your primary motivation for giving?",
     options: [
-      { id: '1a', text: "I feel a moral or religious obligation to fulfil my duty.", weights: { [DonorType.DEVOUT]: 5, [DonorType.COMMUNITARIAN]: 2 } },
-      { id: '1b', text: "I want to be sure my money is used wisely and efficiently.", weights: { [DonorType.REALIST]: 5, [DonorType.ADVOCATE]: 2 } },
-      { id: '1c', text: "It gives me personal joy and a positive outlook on life.", weights: { [DonorType.INNER_PEACE_SEEKER]: 5 } },
-      { id: '1d', text: "I want to influence which causes get the most attention.", weights: { [DonorType.ADVOCATE]: 5, [DonorType.RECOGNITION_SEEKER]: 2 } }
+      { id: '1a', text: "I feel I have a moral or religious obligation.", weights: { [DonorType.DEVOUT]: 5 } },
+      { id: '1b', text: "I want to be sure my money is used wisely.", weights: { [DonorType.REALIST]: 5 } },
+      { id: '1c', text: "Giving gives me joy and a sense of peace.", weights: { [DonorType.INNER_PEACE_SEEKER]: 5 } },
+      { id: '1d', text: "I want to influence which causes get more attention.", weights: { [DonorType.ADVOCATE]: 5 } }
     ]
   },
   {
     id: 2,
-    text: "How important is it that your contribution is recognized by others?",
+    text: "How do you view your relationship with UNICEF?",
     options: [
-      { id: '2a', text: "Not at all—I prefer to help quietly without any notice.", weights: { [DonorType.DEVOUT]: 4, [DonorType.REALIST]: 4, [DonorType.INNER_PEACE_SEEKER]: 4 } },
-      { id: '2b', text: "Somewhat—I value the respect of my family and friends.", weights: { [DonorType.RECOGNITION_SEEKER]: 5, [DonorType.NETWORKER]: 3 } },
-      { id: '2c', text: "Very—I want to stand out and inspire others through my status.", weights: { [DonorType.RECOGNITION_SEEKER]: 4, [DonorType.ADVOCATE]: 3 } }
+      { id: '2a', text: "I want to fulfill my duty in this world.", weights: { [DonorType.DEVOUT]: 5 } },
+      { id: '2b', text: "I value the respect from my family or friends for giving.", weights: { [DonorType.RECOGNITION_SEEKER]: 5 } },
+      { id: '2c', text: "I want to be actively engaged with the cause.", weights: { [DonorType.ACTIVIST]: 5 } },
+      { id: '2d', text: "I want to feel connected with other givers.", weights: { [DonorType.NETWORKER]: 5 } }
     ]
   },
   {
     id: 3,
-    text: "Which of these values resonates with you most strongly?",
+    text: "What is the intended outcome of your gift?",
     options: [
-      { id: '3a', text: "Family importance and a deep feeling of safety.", weights: { [DonorType.DEVOUT]: 5, [DonorType.REALIST]: 3, [DonorType.INNER_PEACE_SEEKER]: 2 } },
-      { id: '3b', text: "Achieving a good work-life balance while helping others.", weights: { [DonorType.REALIST]: 5, [DonorType.INNER_PEACE_SEEKER]: 3 } },
-      { id: '3c', text: "Staying actively engaged and open to new ideas.", weights: { [DonorType.ACTIVIST]: 5, [DonorType.COMMUNITARIAN]: 2 } }
+      { id: '3a', text: "A better future for humanity through solidarity.", weights: { [DonorType.COMMUNITARIAN]: 5 } },
+      { id: '3b', text: "Supporting a cause I feel a strong passion about.", weights: { [DonorType.ACTIVIST]: 5 } },
+      { id: '3c', text: "Being able to deduct this donation from my taxes.", weights: { [DonorType.REALIST]: 5 } },
+      { id: '3d', text: "Standing out from the crowd.", weights: { [DonorType.RECOGNITION_SEEKER]: 5 } }
     ]
   },
   {
     id: 4,
-    text: "In terms of involvement, what describes your ideal relationship with us?",
+    text: "What values do you look for in an organization?",
     options: [
-      { id: '4a', text: "Passive: I trust you to do the work while I support financially.", weights: { [DonorType.DEVOUT]: 5, [DonorType.REALIST]: 4, [DonorType.INNER_PEACE_SEEKER]: 4 } },
-      { id: '4b', text: "Medium: I enjoy community updates and occasional events.", weights: { [DonorType.COMMUNITARIAN]: 5, [DonorType.NETWORKER]: 4 } },
-      { id: '4c', text: "Active: I want to volunteer and participate in the decision-making.", weights: { [DonorType.ACTIVIST]: 5, [DonorType.ADVOCATE]: 4 } }
+      { id: '4a', text: "Tradition and family safety are very important.", weights: { [DonorType.DEVOUT]: 5 } },
+      { id: '4b', text: "Creativity and new ways of thinking.", weights: { [DonorType.ACTIVIST]: 5, [DonorType.ADVOCATE]: 3 } },
+      { id: '4c', text: "Risk-taking to solve major social problems.", weights: { [DonorType.ADVOCATE]: 5 } },
+      { id: '4d', text: "Efficiency and wise spending of funds.", weights: { [DonorType.REALIST]: 5 } }
     ]
   },
   {
     id: 5,
-    text: "What is your stance on 'Tax Deductions' for donations?",
+    text: "How do you prefer to experience giving?",
     options: [
-      { id: '5a', text: "It's a major factor—I prioritize gifts that offer clear benefits.", weights: { [DonorType.REALIST]: 5, [DonorType.ADVOCATE]: 2 } },
-      { id: '5b', text: "It's a nice bonus, but not why I give.", weights: { [DonorType.COMMUNITARIAN]: 3, [DonorType.DEVOUT]: 2 } },
-      { id: '5c', text: "I don't think about it at all.", weights: { [DonorType.INNER_PEACE_SEEKER]: 4, [DonorType.ACTIVIST]: 3 } }
+      { id: '5a', text: "It helps me to have a positive view on life.", weights: { [DonorType.INNER_PEACE_SEEKER]: 5 } },
+      { id: '5b', text: "I enjoy sharing my experiences with other givers.", weights: { [DonorType.NETWORKER]: 5 } },
+      { id: '5c', text: "I like doing something spontaneous that gives me pleasure.", weights: { [DonorType.INNER_PEACE_SEEKER]: 3, [DonorType.ADVOCATE]: 2 } },
+      { id: '5d', text: "I want to express my solidarity with the community.", weights: { [DonorType.COMMUNITARIAN]: 5 } }
     ]
   },
   {
     id: 6,
-    text: "How do you prefer to connect with other like-minded donors?",
+    text: "Which of these benefits matters most to you?",
     options: [
-      { id: '6a', text: "I'd like to share experiences and gain respect within the group.", weights: { [DonorType.NETWORKER]: 5, [DonorType.RECOGNITION_SEEKER]: 2 } },
-      { id: '6b', text: "I prefer to act in solidarity with the community as a whole.", weights: { [DonorType.COMMUNITARIAN]: 5, [DonorType.ACTIVIST]: 2 } },
-      { id: '6c', text: "I'm not interested in networking with other donors.", weights: { [DonorType.DEVOUT]: 4, [DonorType.REALIST]: 3 } }
-    ]
-  },
-  {
-    id: 7,
-    text: "Which of these issues is your absolute top priority?",
-    options: [
-      { id: '7a', text: "Protection of children and their well-being.", weights: { [DonorType.DEVOUT]: 5, [DonorType.REALIST]: 4, [DonorType.INNER_PEACE_SEEKER]: 3 } },
-      { id: '7b', text: "Systemic change through education and advocacy.", weights: { [DonorType.ACTIVIST]: 5, [DonorType.ADVOCATE]: 3 } },
-      { id: '7c', text: "Broad healthcare and disease prevention.", weights: { [DonorType.COMMUNITARIAN]: 4, [DonorType.DEVOUT]: 3 } }
-    ]
-  },
-  {
-    id: 8,
-    text: "What describes your attitude toward social change?",
-    options: [
-      { id: '8a', text: "Too much freedom leads to disorder; traditions are key.", weights: { [DonorType.DEVOUT]: 5, [DonorType.REALIST]: 2 } },
-      { id: '8b', text: "I'm willing to take risks and innovate to solve social problems.", weights: { [DonorType.ADVOCATE]: 5, [DonorType.RECOGNITION_SEEKER]: 3, [DonorType.ACTIVIST]: 3 } },
-      { id: '8c', text: "I'm open to new ideas that improve community life.", weights: { [DonorType.COMMUNITARIAN]: 4, [DonorType.NETWORKER]: 3 } }
+      { id: '6a', text: "Gaining respect and access through my activities.", weights: { [DonorType.NETWORKER]: 5 } },
+      { id: '6b', text: "Seeing the world for what it really is and fixing it.", weights: { [DonorType.ACTIVIST]: 3, [DonorType.ADVOCATE]: 2 } },
+      { id: '6c', text: "Feeling connected with those in need.", weights: { [DonorType.COMMUNITARIAN]: 5 } },
+      { id: '6d', text: "It is an exclusive habit not many people can afford.", weights: { [DonorType.INNER_PEACE_SEEKER]: 5 } }
     ]
   }
 ];

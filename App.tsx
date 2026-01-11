@@ -20,6 +20,7 @@ const App: React.FC = () => {
   }, []);
 
   const calculateResults = (finalAnswers: Record<number, string>) => {
+    // Initialize scores for all types defined in the enum
     const scores: Record<DonorType, number> = {
       [DonorType.DEVOUT]: 0,
       [DonorType.REALIST]: 0,
@@ -31,30 +32,40 @@ const App: React.FC = () => {
       [DonorType.RECOGNITION_SEEKER]: 0,
     };
 
+    // Calculate weighted scores
     QUESTIONS.forEach(q => {
       const selectedOptionId = finalAnswers[q.id];
       const option = q.options.find(o => o.id === selectedOptionId);
       if (option) {
         Object.entries(option.weights).forEach(([type, weight]) => {
-          scores[type as DonorType] += weight || 0;
+          if (type in scores) {
+            scores[type as DonorType] += weight || 0;
+          }
         });
       }
     });
 
-    let winningType = DonorType.DEVOUT;
+    // Find the donor type with the maximum score
+    let winningType: DonorType | null = null;
     let maxScore = -1;
 
-    Object.entries(scores).forEach(([type, score]) => {
-      if (score > maxScore) {
-        maxScore = score;
-        winningType = type as DonorType;
+    // Use a defined order for consistency, but winner is determined by actual max score
+    const types = Object.keys(scores) as DonorType[];
+    types.forEach(type => {
+      if (scores[type] > maxScore) {
+        maxScore = scores[type];
+        winningType = type;
       }
     });
+
+    // Final fallback: If no questions answered or all 0, pick based on the first question's first answer logic or return null
+    // Here we default to the first in the loop if maxScore is 0, but only if winningType was set
+    const finalWinningType = winningType || DonorType.DEVOUT;
 
     const newResult: AssessmentResult = {
       id: Math.random().toString(36).substr(2, 9),
       date: new Date().toISOString(),
-      donorType: winningType,
+      donorType: finalWinningType,
       scores,
     };
 
