@@ -20,7 +20,6 @@ const App: React.FC = () => {
   }, []);
 
   const calculateResults = (finalAnswers: Record<number, string>) => {
-    // Fix: Corrected DonorType member names and initialized all required keys for Record<DonorType, number>
     const scores: Record<DonorType, number> = {
       [DonorType.DEVOUT]: 0,
       [DonorType.REALIST]: 0,
@@ -42,8 +41,6 @@ const App: React.FC = () => {
       }
     });
 
-    // Determine winning type
-    // Fix: Updated default winningType to a valid DonorType member
     let winningType = DonorType.DEVOUT;
     let maxScore = -1;
 
@@ -63,7 +60,6 @@ const App: React.FC = () => {
 
     setCurrentResult(newResult);
     setView('results');
-    // Save to local storage for admin view
     saveResult(newResult);
   };
 
@@ -79,7 +75,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col font-sans">
       {/* Navigation Header */}
       <header className="bg-white border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -87,25 +83,27 @@ const App: React.FC = () => {
             className="flex items-center gap-2 cursor-pointer group"
             onClick={() => setView('landing')}
           >
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold group-hover:bg-indigo-700 transition-colors">
-              D
+            <div className="w-10 h-10 bg-unicef-cyan rounded-full flex items-center justify-center text-white font-bold group-hover:bg-unicef-blue transition-colors overflow-hidden p-1">
+              <svg viewBox="0 0 100 100" className="w-full h-full fill-white">
+                <path d="M50 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 72c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/>
+              </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight text-slate-800">DonorVision</span>
+            <span className="text-xl font-black tracking-tight text-slate-800 uppercase">UNICEF <span className="text-unicef-cyan">Insights</span></span>
           </div>
           
           <nav className="flex items-center gap-4">
             <button 
               onClick={() => setView('admin')}
-              className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors"
+              className="text-sm font-bold text-slate-500 hover:text-unicef-cyan transition-colors uppercase tracking-wider"
             >
-              Admin Dashboard
+              Analytics
             </button>
             {view !== 'landing' && view !== 'assessment' && (
               <button 
                 onClick={resetAssessment}
-                className="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-indigo-100 transition-colors"
+                className="bg-unicef-cyan text-white px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest hover:bg-unicef-blue transition-colors shadow-lg shadow-unicef-cyan/20"
               >
-                Restart Test
+                Retake
               </button>
             )}
           </nav>
@@ -121,7 +119,6 @@ const App: React.FC = () => {
             onSave={(userData) => {
               const updated = { ...currentResult, userData };
               setCurrentResult(updated);
-              // In a real app, we'd update the record in the DB here
               const stored = localStorage.getItem('donor_assessments');
               if (stored) {
                 const results = JSON.parse(stored);
@@ -137,26 +134,26 @@ const App: React.FC = () => {
         {view === 'admin' && <AdminDashboard />}
       </main>
 
-      <footer className="bg-slate-900 text-slate-400 py-12 px-4 border-t border-slate-800">
+      <footer className="bg-unicef-dark text-slate-400 py-12 px-4 border-t border-slate-800">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div>
-            <h4 className="text-white font-bold mb-4">About DonorVision</h4>
+            <h4 className="text-white font-black uppercase tracking-widest text-sm mb-4">UNICEF Insights</h4>
             <p className="text-sm leading-relaxed">
-              Empowering organizations to build lasting relationships through deep donor understanding and psychological insights.
+              Helping UNICEF understand the unique motivations of every individual donor to better serve children everywhere.
             </p>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-4">Quick Links</h4>
-            <ul className="text-sm space-y-2">
-              <li><button onClick={() => setView('landing')} className="hover:text-white transition-colors">Home</button></li>
-              <li><button onClick={() => setView('admin')} className="hover:text-white transition-colors">Admin Dashboard</button></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+            <h4 className="text-white font-black uppercase tracking-widest text-sm mb-4">Navigation</h4>
+            <ul className="text-sm space-y-2 font-bold">
+              <li><button onClick={() => setView('landing')} className="hover:text-unicef-cyan transition-colors">Start Assessment</button></li>
+              <li><button onClick={() => setView('admin')} className="hover:text-unicef-cyan transition-colors">Staff Dashboard</button></li>
+              <li><a href="#" className="hover:text-unicef-cyan transition-colors">Terms of Service</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold mb-4">Contact Support</h4>
-            <p className="text-sm">support@donorvision.io</p>
-            <p className="text-xs mt-4">© 2026 DonorVision. All rights reserved.</p>
+            <h4 className="text-white font-black uppercase tracking-widest text-sm mb-4">Connect</h4>
+            <p className="text-sm">stewardship@unicef.org</p>
+            <p className="text-xs mt-4">© 2026 UNICEF. For every child.</p>
           </div>
         </div>
       </footer>

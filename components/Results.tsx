@@ -22,77 +22,75 @@ const Results: React.FC<ResultsProps> = ({ result, onSave }) => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="grid lg:grid-cols-3 gap-8">
+    <div className="max-w-6xl mx-auto px-4 py-16 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      <div className="grid lg:grid-cols-3 gap-10">
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white p-8 lg:p-12 rounded-3xl shadow-xl border border-slate-100 relative overflow-hidden">
-            <div className={`absolute top-0 left-0 w-full h-2 ${typeInfo.color}`}></div>
+        <div className="lg:col-span-2 space-y-10">
+          <div className="bg-white p-10 lg:p-14 rounded-[3rem] shadow-2xl border border-slate-100 relative overflow-hidden ring-1 ring-slate-100/50">
+            <div className={`absolute top-0 left-0 w-full h-3 ${typeInfo.color}`}></div>
             
-            <div className="mb-8">
-              <span className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2 block">Donor Intelligence Report</span>
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-6xl">{typeInfo.icon}</span>
-                <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">{result.donorType}</h1>
+            <div className="mb-12">
+              <span className="text-[10px] font-black text-unicef-cyan uppercase tracking-[0.4em] mb-3 block">For every child, the right insights</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-6">
+                <span className="text-7xl drop-shadow-sm">{typeInfo.icon}</span>
+                <h1 className="text-5xl lg:text-6xl font-black text-unicef-dark leading-tight uppercase tracking-tighter">{result.donorType}</h1>
               </div>
-              <p className="text-xl text-slate-600 leading-relaxed italic border-l-4 border-slate-100 pl-6 my-6">
+              <p className="text-2xl text-slate-600 leading-relaxed font-bold border-l-8 border-unicef-slate pl-8 my-10 italic">
                 "{typeInfo.description}"
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-8 mb-10">
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Values & Beliefs
+            <div className="grid sm:grid-cols-2 gap-10 mb-12">
+              <div className="space-y-6">
+                <h3 className="text-sm font-black text-unicef-dark flex items-center gap-3 uppercase tracking-widest">
+                  <div className="w-8 h-8 bg-unicef-cyan text-white rounded-lg flex items-center justify-center text-xs">V</div>
+                  Values & Alignment
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {typeInfo.characteristics.map((c, i) => (
-                    <li key={i} className="flex items-center gap-3 text-slate-600">
-                      <div className={`w-2 h-2 rounded-full ${typeInfo.color}`}></div>
+                    <li key={i} className="flex items-center gap-4 text-slate-600 font-bold">
+                      <div className={`w-3 h-3 rounded-full ${typeInfo.color} ring-4 ring-slate-50`}></div>
                       {c}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  Priority Issues
+              <div className="space-y-6">
+                <h3 className="text-sm font-black text-unicef-dark flex items-center gap-3 uppercase tracking-widest">
+                  <div className="w-8 h-8 bg-unicef-yellow text-white rounded-lg flex items-center justify-center text-xs">P</div>
+                  Priority Causes
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3">
                   {typeInfo.priorityIssues.map((issue, i) => (
-                    <span key={i} className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-xs font-bold text-slate-600">
+                    <span key={i} className="px-4 py-2 bg-unicef-slate border border-slate-200 rounded-xl text-[10px] font-black text-unicef-dark uppercase tracking-widest">
                       {issue}
                     </span>
                   ))}
                 </div>
-                <div className="text-slate-500 text-xs italic mt-4">
+                <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest bg-slate-50 p-4 rounded-xl border border-dashed border-slate-200">
                   {typeInfo.engagement}
                 </div>
               </div>
             </div>
 
-            <div className="border-t border-slate-100 pt-8 mt-12">
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Persona Alignment Score</h3>
-              <div className="space-y-5">
+            <div className="border-t border-slate-100 pt-10 mt-14">
+              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8">Persona Strength Matrix</h3>
+              <div className="space-y-6">
                 {sortedScores.map(([type, score]) => (
                   <div key={type} className="group">
-                    <div className="flex justify-between text-sm mb-1.5">
-                      <span className={`font-semibold transition-colors ${type === result.donorType ? typeInfo.accent : 'text-slate-500 group-hover:text-slate-700'}`}>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className={`text-xs font-black uppercase tracking-wider transition-colors ${type === result.donorType ? 'text-unicef-cyan' : 'text-slate-400 group-hover:text-slate-600'}`}>
                         {type}
                       </span>
-                      <span className="font-mono text-slate-400">{Math.round((score / 40) * 100)}%</span>
+                      <span className="font-black text-[10px] text-slate-300 tracking-tighter">{Math.round((score / 40) * 100)}%</span>
                     </div>
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-3 bg-unicef-slate rounded-full overflow-hidden p-0.5">
                       <div 
-                        className={`h-full transition-all duration-1000 ease-out ${type === result.donorType ? DONOR_TYPES_INFO[type as DonorType].color : 'bg-slate-300 opacity-40'}`}
+                        className={`h-full rounded-full transition-all duration-1000 ease-out shadow-sm ${type === result.donorType ? DONOR_TYPES_INFO[type as DonorType].color : 'bg-slate-300 opacity-30'}`}
                         style={{ width: `${Math.max(5, (score / 40) * 100)}%` }}
-                      />
+                      >
+                         <div className="w-full h-full bg-white/20 animate-pulse"></div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -100,27 +98,27 @@ const Results: React.FC<ResultsProps> = ({ result, onSave }) => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-slate-900 rounded-3xl p-8 text-white">
-              <h3 className="text-xl font-bold mb-4">Donor Roadmap</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 font-bold italic">B</div>
-                  <p className="text-sm text-slate-300">Target barriers: Address concerns about money reach and local support priority.</p>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-unicef-dark rounded-[2.5rem] p-10 text-white shadow-2xl">
+              <h3 className="text-xl font-black mb-6 uppercase tracking-tight">Your 2026 Roadmap</h3>
+              <ul className="space-y-6">
+                <li className="flex items-start gap-4">
+                  <div className="mt-1 w-8 h-8 bg-unicef-cyan text-white rounded-xl flex items-center justify-center text-xs font-black italic flex-shrink-0 shadow-lg shadow-unicef-cyan/20">01</div>
+                  <p className="text-sm text-slate-300 font-medium leading-relaxed">Focus on child protection programs where your values map most directly to the 54% recruit success rate.</p>
                 </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 font-bold italic">E</div>
-                  <p className="text-sm text-slate-300">Engagement: Leverage roadshows (54% effective) and social media channels.</p>
+                <li className="flex items-start gap-4">
+                  <div className="mt-1 w-8 h-8 bg-unicef-cyan text-white rounded-xl flex items-center justify-center text-xs font-black italic flex-shrink-0 shadow-lg shadow-unicef-cyan/20">02</div>
+                  <p className="text-sm text-slate-300 font-medium leading-relaxed">Engage with social media campaigns designed for the {result.donorType} persona (61% preferred channel).</p>
                 </li>
               </ul>
             </div>
-            <div className="bg-indigo-50 rounded-3xl p-8 border border-indigo-100">
-              <h3 className="text-xl font-bold text-indigo-900 mb-4">Impact Opportunities</h3>
-              <div className="space-y-3">
+            <div className="bg-unicef-cyan/5 rounded-[2.5rem] p-10 border-2 border-unicef-cyan/10 shadow-lg">
+              <h3 className="text-xl font-black text-unicef-dark mb-6 uppercase tracking-tight">Impact Areas</h3>
+              <div className="space-y-4">
                 {typeInfo.opportunities.map((opp, i) => (
-                  <div key={i} className="bg-white p-3 rounded-xl shadow-sm border border-indigo-100 flex items-center justify-between">
-                    <span className="text-sm font-bold text-indigo-700">{opp}</span>
-                    <button className="text-xs font-bold text-indigo-600 hover:underline">Info →</button>
+                  <div key={i} className="bg-white p-4 rounded-2xl shadow-sm border border-unicef-cyan/20 flex items-center justify-between group hover:border-unicef-cyan transition-colors">
+                    <span className="text-xs font-black text-unicef-dark uppercase tracking-wider">{opp}</span>
+                    <button className="w-8 h-8 bg-unicef-cyan/10 text-unicef-cyan rounded-full flex items-center justify-center font-black group-hover:bg-unicef-cyan group-hover:text-white transition-all">→</button>
                   </div>
                 ))}
               </div>
@@ -129,62 +127,70 @@ const Results: React.FC<ResultsProps> = ({ result, onSave }) => {
         </div>
 
         {/* Sidebar / Form */}
-        <div className="space-y-8">
+        <div className="space-y-10">
           {!isSubmitted ? (
-            <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 sticky top-24">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Get Your Stewardship Plan</h3>
-              <p className="text-slate-500 text-sm mb-6 leading-relaxed">
-                Connect your {result.donorType} profile with our team to receive an exclusive giving report based on 2026 data.
+            <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-slate-100 sticky top-24 ring-4 ring-unicef-slate">
+              <h3 className="text-2xl font-black text-unicef-dark mb-4 uppercase tracking-tighter">Impact Report</h3>
+              <p className="text-slate-500 text-sm mb-8 leading-relaxed font-medium">
+                Link your <span className="text-unicef-cyan font-black">{result.donorType}</span> profile to a full UNICEF stewardship package for 2026.
               </p>
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 ml-1">Name</label>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Full Name</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-indigo-50 focus:border-indigo-600 outline-none transition-all placeholder:text-slate-300"
-                    placeholder="John Doe"
+                    className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:ring-8 focus:ring-unicef-cyan/5 focus:border-unicef-cyan outline-none transition-all font-bold placeholder:text-slate-200"
+                    placeholder="Jane Doe"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 ml-1">Email</label>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Address</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-4 focus:ring-indigo-50 focus:border-indigo-600 outline-none transition-all placeholder:text-slate-300"
-                    placeholder="john@example.com"
+                    className="w-full px-6 py-4 rounded-2xl border-2 border-slate-100 focus:ring-8 focus:ring-unicef-cyan/5 focus:border-unicef-cyan outline-none transition-all font-bold placeholder:text-slate-200"
+                    placeholder="jane@unicef.org"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all mt-4 text-lg"
+                  className="w-full py-5 bg-unicef-cyan text-white rounded-full font-black shadow-xl shadow-unicef-cyan/30 hover:bg-unicef-blue hover:-translate-y-1 transition-all mt-4 text-sm uppercase tracking-widest"
                 >
-                  Download Stewardship Report
+                  Download Report
                 </button>
-                <p className="text-[11px] text-slate-400 text-center leading-relaxed px-4">
-                  Privacy compliant. Based on research of 4,406 respondents.
+                <p className="text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest px-4 pt-4 leading-relaxed">
+                  Trusted by <span className="text-unicef-cyan font-black">4,400+</span> global donors.
                 </p>
               </form>
             </div>
           ) : (
-            <div className="bg-emerald-50 p-10 rounded-3xl border border-emerald-100 sticky top-24 text-center">
-              <div className="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-lg shadow-emerald-200">✓</div>
-              <h3 className="text-2xl font-bold text-emerald-900 mb-3">Report Ready!</h3>
-              <p className="text-emerald-700 leading-relaxed mb-8">
-                Your personalized {result.donorType} stewardship pack is sent to <strong>{formData.email}</strong>.
+            <div className="bg-unicef-green p-12 rounded-[2.5rem] text-center shadow-2xl shadow-unicef-green/20 sticky top-24">
+              <div className="w-24 h-24 bg-white text-unicef-green rounded-full flex items-center justify-center text-4xl mx-auto mb-8 shadow-xl">✓</div>
+              <h3 className="text-3xl font-black text-white mb-4 uppercase tracking-tighter">Confirmed!</h3>
+              <p className="text-white font-bold leading-relaxed mb-10 opacity-90">
+                The {result.donorType} stewardship pack is on its way to your inbox.
               </p>
               <button 
                 onClick={() => setIsSubmitted(false)}
-                className="text-emerald-600 font-bold text-xs hover:underline block mx-auto"
+                className="w-full py-4 bg-unicef-dark text-white rounded-full font-black text-xs uppercase tracking-widest hover:bg-black transition-colors"
               >
                 Change Details
               </button>
             </div>
           )}
+          
+          <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm text-center">
+            <h4 className="font-black text-unicef-dark text-[10px] uppercase tracking-[0.3em] mb-6">Promote Visibility</h4>
+            <div className="flex flex-col gap-3">
+              <button className="w-full py-3 bg-unicef-cyan/10 text-unicef-cyan rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-unicef-cyan hover:text-white transition-all">Share Result</button>
+              <button className="w-full py-3 bg-slate-50 text-slate-400 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-100 transition-all">Copy Link</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

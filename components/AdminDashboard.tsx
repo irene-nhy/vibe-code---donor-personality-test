@@ -16,7 +16,7 @@ const AdminDashboard: React.FC = () => {
   }, []);
 
   const clearData = () => {
-    if (confirm("Are you sure you want to clear all assessment data?")) {
+    if (confirm("Permanently delete all donor insights data?")) {
       localStorage.removeItem('donor_assessments');
       setResults([]);
     }
@@ -28,93 +28,101 @@ const AdminDashboard: React.FC = () => {
   }, {} as Record<string, number>);
 
   const chartData = Object.entries(donorTypeCounts).map(([name, value]) => ({
-    name: name.split(' ').pop(), // Short name
+    name: name.split(' ').pop(),
     fullName: name,
     value
   }));
 
   const pieData = chartData;
 
-  const COLORS = ['#6366f1', '#2563eb', '#059669', '#d97706', '#4f46e5'];
+  const COLORS = ['#00adef', '#ffc20e', '#80bc00', '#d80b8c', '#1c3041', '#1cabe2', '#e2231a', '#94a3b8'];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+    <div className="max-w-7xl mx-auto px-4 py-16 flex-grow w-full font-sans">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900">Analytics Dashboard</h1>
-          <p className="text-slate-500">Real-time insights from {results.length} completed assessments.</p>
+          <span className="text-[10px] font-black text-unicef-cyan uppercase tracking-[0.4em] mb-2 block">Staff Only</span>
+          <h1 className="text-4xl font-black text-unicef-dark uppercase tracking-tight">Intelligence Dashboard</h1>
+          <p className="text-slate-400 font-bold text-sm">Aggregated data from {results.length} unique profiles.</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <button 
             onClick={clearData}
-            className="px-4 py-2 text-rose-600 text-sm font-bold hover:bg-rose-50 rounded-lg transition-colors"
+            className="px-6 py-3 text-rose-500 text-[10px] font-black uppercase tracking-widest hover:bg-rose-50 rounded-full transition-colors"
           >
-            Clear Data
+            Wipe Database
           </button>
-          <button className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-bold text-sm hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100">
-            Export CSV
+          <button className="px-8 py-3 bg-unicef-dark text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-unicef-dark/20">
+            Export Dataset
           </button>
         </div>
       </div>
 
-      <div className="flex gap-4 border-b border-slate-200 mb-8">
+      <div className="flex gap-8 border-b-2 border-slate-100 mb-12">
         <button 
           onClick={() => setActiveTab('overview')}
-          className={`pb-4 text-sm font-bold transition-all border-b-2 ${activeTab === 'overview' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
+          className={`pb-6 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${activeTab === 'overview' ? 'text-unicef-cyan' : 'text-slate-300 hover:text-slate-500'}`}
         >
-          Overview
+          Visual Analytics
+          {activeTab === 'overview' && <div className="absolute bottom-0 left-0 w-full h-1 bg-unicef-cyan -mb-0.5 rounded-full"></div>}
         </button>
         <button 
           onClick={() => setActiveTab('data')}
-          className={`pb-4 text-sm font-bold transition-all border-b-2 ${activeTab === 'data' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-400 hover:text-slate-600'}`}
+          className={`pb-6 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${activeTab === 'data' ? 'text-unicef-cyan' : 'text-slate-300 hover:text-slate-500'}`}
         >
-          Respondent Data
+          Raw Respondents
+          {activeTab === 'data' && <div className="absolute bottom-0 left-0 w-full h-1 bg-unicef-cyan -mb-0.5 rounded-full"></div>}
         </button>
       </div>
 
       {activeTab === 'overview' ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest block mb-2">Total Completions</span>
-            <span className="text-3xl font-extrabold text-slate-900">{results.length}</span>
-            <div className="mt-2 text-emerald-600 text-xs font-bold">↑ 12% from last month</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 ring-4 ring-unicef-slate">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-4">Total Profiles</span>
+            <span className="text-5xl font-black text-unicef-dark">{results.length}</span>
+            <div className="mt-4 flex items-center gap-1 text-unicef-green text-[10px] font-black">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v10.586l3.293-3.293a1 1 0 111.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" className="rotate-180"/></svg>
+              12.4% MONTHLY GROWTH
+            </div>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest block mb-2">Lead Conversion</span>
-            <span className="text-3xl font-extrabold text-slate-900">
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 ring-4 ring-unicef-slate">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-4">Lead Capture</span>
+            <span className="text-5xl font-black text-unicef-cyan">
               {results.length > 0 ? Math.round((results.filter(r => r.userData).length / results.length) * 100) : 0}%
             </span>
-            <div className="mt-2 text-slate-400 text-xs">Users who left contact details</div>
+            <div className="mt-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">Completed Opt-ins</div>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest block mb-2">Dominant Type</span>
-            <span className="text-xl font-extrabold text-indigo-600">
-              {chartData.sort((a,b) => b.value - a.value)[0]?.fullName || 'N/A'}
-            </span>
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 ring-4 ring-unicef-slate">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-4">Dominant Persona</span>
+            <div className="flex items-center gap-2">
+               <span className="text-2xl font-black text-unicef-magenta">
+                {chartData.sort((a,b) => b.value - a.value)[0]?.fullName.split(' ').pop() || 'None'}
+              </span>
+            </div>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest block mb-2">Avg. Score</span>
-            <span className="text-3xl font-extrabold text-slate-900">18.4</span>
-            <div className="mt-2 text-slate-400 text-xs">Total affinity points</div>
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 ring-4 ring-unicef-slate">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-4">Engagement Score</span>
+            <span className="text-5xl font-black text-unicef-yellow">8.9</span>
+            <div className="mt-4 text-slate-400 text-[10px] font-bold uppercase tracking-widest">Avg. Motivation Level</div>
           </div>
         </div>
       ) : null}
 
       {activeTab === 'overview' && (
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-            <h3 className="text-lg font-bold text-slate-900 mb-8">Personality Distribution</h3>
-            <div className="h-[300px]">
+        <div className="grid lg:grid-cols-2 gap-10">
+          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100 ring-4 ring-unicef-slate">
+            <h3 className="text-xs font-black text-unicef-dark uppercase tracking-[0.2em] mb-10">Volume by Segment</h3>
+            <div className="h-[350px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
-                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 800}} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 800}} />
                   <Tooltip 
                     cursor={{fill: '#f8fafc'}}
-                    contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}}
+                    contentStyle={{borderRadius: '1.5rem', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', padding: '1rem'}}
                   />
-                  <Bar dataKey="value" radius={[4, 4, 0, 0]} barSize={40}>
+                  <Bar dataKey="value" radius={[10, 10, 0, 0]} barSize={50}>
                     {chartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
@@ -124,33 +132,33 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-            <h3 className="text-lg font-bold text-slate-900 mb-8">Segmentation Breakdown</h3>
-            <div className="h-[300px]">
+          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100 ring-4 ring-unicef-slate">
+            <h3 className="text-xs font-black text-unicef-dark uppercase tracking-[0.2em] mb-10">Persona Concentration</h3>
+            <div className="h-[350px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={pieData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={5}
+                    innerRadius={80}
+                    outerRadius={120}
+                    paddingAngle={8}
                     dataKey="value"
                   >
                     {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} stroke="none" />
                     ))}
                   </Pie>
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
               {chartData.map((entry, index) => (
-                <div key={index} className="flex items-center gap-2 text-xs">
-                  <div className="w-3 h-3 rounded-full" style={{backgroundColor: COLORS[index % COLORS.length]}}></div>
-                  <span className="text-slate-600 truncate">{entry.fullName}</span>
+                <div key={index} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-tighter">
+                  <div className="w-3 h-3 rounded-full flex-shrink-0" style={{backgroundColor: COLORS[index % COLORS.length]}}></div>
+                  <span className="text-slate-500 truncate">{entry.fullName}</span>
                 </div>
               ))}
             </div>
@@ -159,45 +167,50 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {activeTab === 'data' && (
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden ring-4 ring-unicef-slate">
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Date</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Donor Profile</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Name</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Email</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Date Collected</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Identified Persona</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Respondent Name</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact</th>
+                  <th className="px-10 py-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Classification</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
                 {results.length > 0 ? (
                   results.map((r) => (
-                    <tr key={r.id} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="px-6 py-4 text-sm text-slate-500">
-                        {new Date(r.date).toLocaleDateString()}
+                    <tr key={r.id} className="hover:bg-unicef-slate/50 transition-colors group">
+                      <td className="px-10 py-6 text-[11px] font-bold text-slate-400">
+                        {new Date(r.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                       </td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${DONOR_TYPES_INFO[r.donorType].color} text-white`}>
+                      <td className="px-10 py-6">
+                        <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm ${DONOR_TYPES_INFO[r.donorType].color} text-white`}>
                           {r.donorType}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold text-slate-700">
-                        {r.userData?.name || <span className="text-slate-300 italic">Anonymous</span>}
+                      <td className="px-10 py-6 text-sm font-black text-unicef-dark uppercase tracking-tight">
+                        {r.userData?.name || <span className="text-slate-300 italic font-medium lowercase">anon-{r.id}</span>}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-600">
-                        {r.userData?.email || <span className="text-slate-300">—</span>}
+                      <td className="px-10 py-6 text-[11px] font-bold text-unicef-cyan lowercase">
+                        {r.userData?.email || <span className="text-slate-200">—</span>}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-600 capitalize">
-                        {r.userData?.status || <span className="text-slate-300">—</span>}
+                      <td className="px-10 py-6">
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest border border-slate-200 px-3 py-1 rounded-lg">
+                          {r.userData?.status || 'anonymous'}
+                        </span>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5} className="px-6 py-20 text-center text-slate-400 italic">
-                      No assessment data available yet.
+                    <td colSpan={5} className="px-10 py-32 text-center">
+                      <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg className="w-8 h-8 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                      </div>
+                      <p className="text-slate-300 font-black uppercase tracking-widest text-xs">Awaiting respondents</p>
                     </td>
                   </tr>
                 )}

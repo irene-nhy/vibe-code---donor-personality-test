@@ -9,103 +9,105 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
   return (
     <div className="relative overflow-hidden bg-white">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-indigo-50 rounded-full blur-3xl opacity-50" />
-      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-emerald-50 rounded-full blur-3xl opacity-50" />
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-unicef-cyan/5 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-unicef-green/5 rounded-full blur-3xl opacity-50" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 flex flex-col lg:flex-row items-center gap-12">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col lg:flex-row items-center gap-12">
         <div className="flex-1 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-sm font-semibold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-unicef-cyan text-white text-[10px] font-black uppercase tracking-[0.2em] mb-8">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
             </span>
-            Takes only 3 minutes
+            3-Minute Donor Profile
           </div>
-          <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 mb-6 leading-tight">
-            Discover Your <span className="text-indigo-600">Giving Personality</span>
+          <h1 className="text-5xl lg:text-7xl font-black text-slate-900 mb-8 leading-[1.1] uppercase tracking-tight">
+            For Every Child, <br/>
+            <span className="text-unicef-cyan">Your Support</span>
           </h1>
-          <p className="text-xl text-slate-600 mb-10 max-w-2xl leading-relaxed">
-            Every donor is unique. Take our evidence-based assessment to uncover your philanthropic motivations and find the most meaningful ways to make an impact.
+          <p className="text-xl text-slate-600 mb-10 max-w-2xl leading-relaxed font-medium">
+            Discover how your personal values translate into impact. Take our psychological assessment to uncover your donor personality and find your unique path to helping children.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
             <button
               onClick={onStart}
-              className="px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-1 transition-all active:translate-y-0"
+              className="px-10 py-5 bg-unicef-cyan text-white rounded-full font-black text-lg shadow-xl shadow-unicef-cyan/30 hover:bg-unicef-blue hover:-translate-y-1 transition-all active:translate-y-0 uppercase tracking-widest"
             >
-              Start My Assessment
+              Start My Profile
             </button>
-            <button className="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-lg hover:bg-slate-50 transition-colors">
-              Learn More
+            <button className="px-10 py-5 bg-white text-unicef-cyan border-2 border-unicef-cyan rounded-full font-black text-lg hover:bg-unicef-cyan hover:text-white transition-all uppercase tracking-widest">
+              Impact Stories
             </button>
           </div>
           
-          <div className="mt-12 flex items-center gap-6 justify-center lg:justify-start">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map(i => (
+          <div className="mt-14 flex items-center gap-6 justify-center lg:justify-start border-t border-slate-100 pt-8">
+            <div className="flex -space-x-3">
+              {[1, 2, 3, 4, 5].map(i => (
                 <img
                   key={i}
-                  src={`https://picsum.photos/seed/${i + 20}/64/64`}
-                  alt="User"
-                  className="w-10 h-10 rounded-full border-2 border-white"
+                  src={`https://i.pravatar.cc/100?u=unicef${i}`}
+                  alt="Donor"
+                  className="w-12 h-12 rounded-full border-4 border-white shadow-sm"
                 />
               ))}
             </div>
-            <p className="text-sm text-slate-500 font-medium">
-              Join <span className="text-slate-900 font-bold">2,500+</span> donors who found their path.
+            <p className="text-sm text-slate-500 font-bold">
+              Over <span className="text-unicef-cyan font-black">4,400+</span> individuals analyzed.
             </p>
           </div>
         </div>
 
         <div className="flex-1 relative">
-          <div className="relative z-10 bg-white p-8 rounded-3xl shadow-2xl border border-slate-100">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 animate-pulse">
-                <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-2xl">❤️</div>
-                <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-                  <div className="h-3 bg-slate-100 rounded w-1/2"></div>
+          <div className="relative z-10 bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100 ring-1 ring-slate-100/50">
+            <div className="space-y-8">
+              <div className="flex items-center gap-5 p-5 rounded-2xl bg-unicef-slate border border-slate-200 animate-pulse">
+                <div className="w-14 h-14 bg-unicef-cyan/20 rounded-full flex items-center justify-center text-3xl">🕊️</div>
+                <div className="flex-1 space-y-3">
+                  <div className="h-5 bg-slate-200 rounded-full w-4/5"></div>
+                  <div className="h-3 bg-slate-100 rounded-full w-1/2"></div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 ml-6 scale-105 shadow-md">
-                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-2xl">🤝</div>
+              <div className="flex items-center gap-5 p-6 rounded-2xl bg-white border-2 border-unicef-cyan ml-10 scale-110 shadow-xl shadow-unicef-cyan/10">
+                <div className="w-16 h-16 bg-unicef-cyan text-white rounded-full flex items-center justify-center text-3xl font-bold">✊</div>
                 <div className="flex-1">
-                  <div className="h-4 bg-slate-800 rounded w-2/3 mb-2"></div>
-                  <div className="text-xs text-slate-500">Community Builder Profile</div>
+                  <div className="h-5 bg-slate-800 rounded-full w-2/3 mb-2"></div>
+                  <div className="text-[10px] text-unicef-cyan font-black uppercase tracking-widest">Activist Persona</div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">📈</div>
-                <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-                  <div className="h-3 bg-slate-100 rounded w-1/2"></div>
+              <div className="flex items-center gap-5 p-5 rounded-2xl bg-unicef-slate border border-slate-200">
+                <div className="w-14 h-14 bg-unicef-green/20 rounded-full flex items-center justify-center text-3xl">🏙️</div>
+                <div className="flex-1 space-y-3">
+                  <div className="h-5 bg-slate-200 rounded-full w-4/5"></div>
+                  <div className="h-3 bg-slate-100 rounded-full w-1/2"></div>
                 </div>
               </div>
             </div>
           </div>
           {/* Decorative shapes */}
-          <div className="absolute -top-4 -right-4 w-24 h-24 bg-amber-400 rounded-2xl rotate-12 -z-0 opacity-20"></div>
-          <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-600 rounded-full -z-0 opacity-10 blur-xl"></div>
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-unicef-yellow rounded-full -z-0 opacity-20 blur-2xl"></div>
+          <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-unicef-magenta rounded-full -z-0 opacity-10 blur-3xl"></div>
         </div>
       </div>
 
-      <div className="bg-slate-50 py-20">
+      <div className="bg-unicef-slate py-24">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">How it works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">1</div>
-              <h3 className="text-xl font-bold mb-4">Answer Questions</h3>
-              <p className="text-slate-600">Complete a short series of psychological prompts about your values and giving habits.</p>
+          <h2 className="text-sm font-black text-unicef-cyan uppercase tracking-[0.3em] mb-4">Methodology</h2>
+          <h2 className="text-4xl font-black text-unicef-dark mb-16 uppercase">The Science of Giving</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="group p-10 bg-white rounded-[2rem] shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all border border-slate-100">
+              <div className="w-16 h-16 bg-unicef-cyan text-white rounded-2xl flex items-center justify-center font-black text-2xl mx-auto mb-8 rotate-3 group-hover:rotate-0 transition-transform">01</div>
+              <h3 className="text-xl font-black mb-4 uppercase tracking-tight">Psychographics</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">Answer tailored questions mapping your values to established donor dimensions.</p>
             </div>
-            <div className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">2</div>
-              <h3 className="text-xl font-bold mb-4">View Analysis</h3>
-              <p className="text-slate-600">Our engine calculates your primary giving dimension and creates a detailed profile.</p>
+            <div className="group p-10 bg-white rounded-[2rem] shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all border border-slate-100">
+              <div className="w-16 h-16 bg-unicef-yellow text-white rounded-2xl flex items-center justify-center font-black text-2xl mx-auto mb-8 -rotate-3 group-hover:rotate-0 transition-transform">02</div>
+              <h3 className="text-xl font-black mb-4 uppercase tracking-tight">Type Discovery</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">Our logic engine identifies your dominant profile from 8 scientifically-defined segments.</p>
             </div>
-            <div className="p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-6">3</div>
-              <h3 className="text-xl font-bold mb-4">Connect Better</h3>
-              <p className="text-slate-600">Get personalized recommendations on how to engage with causes you care about most.</p>
+            <div className="group p-10 bg-white rounded-[2rem] shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all border border-slate-100">
+              <div className="w-16 h-16 bg-unicef-green text-white rounded-2xl flex items-center justify-center font-black text-2xl mx-auto mb-8 rotate-6 group-hover:rotate-0 transition-transform">03</div>
+              <h3 className="text-xl font-black mb-4 uppercase tracking-tight">Impact Roadmap</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">Get a personalized stewardship plan to maximize your contribution to every child.</p>
             </div>
           </div>
         </div>

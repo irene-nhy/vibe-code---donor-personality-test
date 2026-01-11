@@ -7,12 +7,36 @@
     <title>Donor Personality Assessment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              unicef: {
+                cyan: '#00adef',
+                blue: '#1cabe2',
+                yellow: '#ffc20e',
+                magenta: '#d80b8c',
+                green: '#80bc00',
+                dark: '#1c3041',
+                slate: '#f3f3f3'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            }
+          }
+        }
+      }
+    </script>
     <style>
       body {
         font-family: 'Inter', sans-serif;
       }
       h1, h2, h3 {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Inter', sans-serif; /* UNICEF branding usually uses clean sans-serif */
+        font-weight: 800;
       }
     </style>
   <script type="importmap">
